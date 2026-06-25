@@ -119,6 +119,13 @@ vim.schedule(function()
 	vim.o.clipboard = "unnamedplus"
 end)
 
+--Background and stuffs
+vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "#000000" })
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -470,6 +477,32 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader>sc", builtin.commands, { desc = "[S]earch [C]ommands" })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			vim.keymap.set("n", "<leader>fD", function()
+				local builtin = require("telescope.builtin")
+
+				local root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+
+				if vim.v.shell_error ~= 0 or root == "" then
+					root = vim.fn.getcwd()
+				end
+
+				builtin.find_files({
+					cwd = root,
+					hidden = true,
+					no_ignore = true,
+					find_command = {
+						"fd",
+						"--type",
+						"f",
+						"--hidden",
+						"--no-ignore",
+						"--exclude",
+						".git",
+					},
+				})
+			end, { desc = "[F]ind all files (including ignored)" })
+			vim.keymap.set("v", ">", ">gv")
+			vim.keymap.set("v", "<", "<gv")
 
 			-- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
 			-- it is better explained there). This allows easily switching between pickers if you prefer using something else!
@@ -899,6 +932,10 @@ require("lazy").setup({
 		name = "catppuccin",
 		priority = 1000,
 		config = function()
+			require("catppuccin").setup({
+				flavour = "mocha",
+				transparent_background = true,
+			})
 			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
