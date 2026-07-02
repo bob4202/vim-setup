@@ -245,15 +245,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "typescriptreact", "javascriptreact" },
-	callback = function()
-		vim.bo.indentexpr = ""
-		vim.bo.autoindent = true
-		vim.bo.smartindent = true
-	end,
-})
-
 vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function()
 		local dir = vim.fn.expand("<afile>:p:h")
@@ -469,6 +460,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+			vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
 			vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 			vim.keymap.set({ "n", "v" }, "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
@@ -720,9 +712,15 @@ require("lazy").setup({
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`ts_ls`) will work just fine
-				ts_ls = {},
-
-				stylua = {}, -- Used to format Lua code
+				ts_ls = {
+					init_options = {
+						preferences = {
+							includeCompletionsForModuleExports = true,
+							includeCompletionsWithInsertText = true,
+							includeAutomaticOptionalChainCompletions = true,
+						},
+					},
+				},
 
 				-- Special Lua Config, as recommended by neovim help docs
 				lua_ls = {
@@ -768,7 +766,8 @@ require("lazy").setup({
 			-- You can press `g?` for help in this menu.
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
-				-- You can add other tools here that you want Mason to install
+				"stylua",
+				"prettierd",
 			})
 
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -1021,6 +1020,7 @@ require("lazy").setup({
 				},
 				indent = {
 					enable = true,
+					disable = { "typescript", "tsx", "javascript", "javascriptreact", "typescriptreact" },
 				},
 			})
 		end,
