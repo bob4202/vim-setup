@@ -721,6 +721,24 @@ require("lazy").setup({
 						},
 					},
 				},
+				tailwindcss = {
+					filetypes = {
+						"html",
+						"css",
+						"javascript",
+						"typescript",
+						"svelte",
+						"vue",
+						"javascriptreact",
+						"typescriptreact",
+						"sveltereact",
+						"vuereact",
+					},
+					commands = {
+						"tailwindcss-language-server",
+						"tailwindcss-language-server-all-features",
+					},
+				},
 
 				-- Special Lua Config, as recommended by neovim help docs
 				lua_ls = {
@@ -990,17 +1008,44 @@ require("lazy").setup({
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		branch = "master",
+		branch = "main",
+		lazy = false,
 		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = {
+			require("nvim-treesitter").setup()
+
+			require("nvim-treesitter").install({
+				"go",
+				"gomod",
+				"gowork",
+				"gosum",
+				"javascript",
+				"typescript",
+				"tsx",
+				"jsdoc",
+				"json",
+				"css",
+				"python",
+				"lua",
+				"vim",
+				"vimdoc",
+				"query",
+				"bash",
+				"html",
+				"markdown",
+				"markdown_inline",
+			})
+
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = {
 					"go",
 					"gomod",
 					"gowork",
 					"gosum",
 					"javascript",
 					"typescript",
+					"typescriptreact",
+					"javascriptreact",
 					"tsx",
 					"jsdoc",
 					"json",
@@ -1013,15 +1058,12 @@ require("lazy").setup({
 					"bash",
 					"html",
 					"markdown",
-					"markdown_inline",
 				},
-				highlight = {
-					enable = true,
-				},
-				indent = {
-					enable = true,
-					disable = { "typescript", "tsx", "javascript", "javascriptreact", "typescriptreact" },
-				},
+				callback = function(args)
+					if vim.bo[args.buf].filetype ~= "TelescopePrompt" then
+						pcall(vim.treesitter.start, args.buf)
+					end
+				end,
 			})
 		end,
 	},
@@ -1182,7 +1224,47 @@ require("lazy").setup({
 			})
 		end,
 	},
+	{
+		"supermaven-inc/supermaven-nvim",
+		config = function()
+			require("supermaven-nvim").setup({
+				keymap = {
+					accept_suggestion = "<Tab>",
+					clear_suggestion = "<C-]>",
+					accept_word = "<C-j>",
+				},
+				color = {
+					suggestion_color = "#ffffff",
+					cterm = 244,
+				},
+				log_level = "info",
+				disable_inline_completion = false,
+				condition = function()
+					return false
+				end,
+			})
+		end,
+	},
+	{
+		"stevearc/oil.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("oil").setup({
+				columns = { "icon" },
+				view_options = {
+					show_hidden = true,
+				},
+				keymaps = {
+					["<C-h>"] = false,
+					["<M-h>"] = "actions.select_split",
+				},
+			})
 
+			vim.keymap.set("n", "-", "<CMD>Oil<CR>", {
+				desc = "Open parent directory",
+			})
+		end,
+	},
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
 	-- place them in the correct locations.
