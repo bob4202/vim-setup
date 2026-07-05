@@ -162,6 +162,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.o.expandtab = true
+vim.opt.guicursor = "n-v-c:block-blinkwait700-blinkoff400-blinkon250,i-ci-ve:block-blinkon0"
 
 -- Preview substitutions live, as you type!
 vim.o.inccommand = "split"
