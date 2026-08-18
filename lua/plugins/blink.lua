@@ -36,14 +36,12 @@ return { -- Autocompletion
 				-- you've explicitly navigated to a suggestion first.
 				selection = { preselect = false },
 			},
-			completion = {
-				menu = {
-					draw = {
-						columns = {
-							{ "kind_icon" },
-							{ "label", "label_description", gap = 1 },
-							{ "source_name" },
-						},
+			menu = {
+				draw = {
+					columns = {
+						{ "kind_icon" },
+						{ "label", "label_description", gap = 1 },
+						{ "source_name" },
 					},
 				},
 			},
