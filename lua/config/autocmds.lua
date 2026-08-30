@@ -19,3 +19,15 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		end
 	end,
 })
+
+-- Check if the current file changed on disk (e.g. `git pull` from another
+-- tmux pane) and reload it, since `autoread` alone only checks on a few events
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+	desc = "Reload buffer if it changed on disk",
+	group = vim.api.nvim_create_augroup("checktime", { clear = true }),
+	callback = function()
+		if vim.fn.mode() ~= "c" then
+			vim.cmd("checktime")
+		end
+	end,
+})

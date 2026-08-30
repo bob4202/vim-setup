@@ -66,3 +66,10 @@ vim.o.scrolloff = 10
 
 -- Confirm instead of failing operations that would lose unsaved changes
 vim.o.confirm = true
+
+-- Don't wrap long lines
+vim.o.wrap = false
+
+-- Reload a file from disk automatically if it changed outside Neovim
+-- (e.g. `git pull` from another tmux pane) and you haven't edited it here
+vim.o.autoread = true

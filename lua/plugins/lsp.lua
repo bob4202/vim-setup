@@ -92,7 +92,14 @@ return { -- Main LSP Configuration
 		--  See `:help lsp-config` for information about keys and how to configure
 		---@type table<string, vim.lsp.Config>
 		local servers = {
-			gopls = {},
+			gopls = {
+				settings = {
+					gopls = {
+						hoverKind = "FullDocumentation",
+						usePlaceholders = true,
+					},
+				},
+			},
 			pyright = {},
 			ts_ls = {
 				init_options = {
