@@ -96,7 +96,7 @@ return { -- Main LSP Configuration
 				settings = {
 					gopls = {
 						hoverKind = "FullDocumentation",
-						usePlaceholders = true,
+						usePlaceholders = false,
 					},
 				},
 			},
