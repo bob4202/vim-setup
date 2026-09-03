@@ -128,6 +128,8 @@ return { -- Main LSP Configuration
 					"tailwindcss-language-server-all-features",
 				},
 			},
+			-- Prisma Language Server
+			prismals = {},
 
 			-- Special Lua Config, as recommended by neovim help docs
 			lua_ls = {
