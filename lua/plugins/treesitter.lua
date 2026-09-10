@@ -58,10 +58,11 @@ return {
 			end,
 		})
 
-		-- Use treesitter for indentation on JS/TS/JSX/TSX, where the built-in
-		-- indent script doesn't understand nested JSX and drifts badly.
+		-- Use treesitter for indentation only where JSX nesting actually needs
+		-- it; the built-in indent script handles plain object/call nesting
+		-- (e.g. zod schemas) better than treesitter's indent queries do.
 		vim.api.nvim_create_autocmd("FileType", {
-			pattern = { "javascript", "typescript", "typescriptreact", "javascriptreact", "tsx", "jsdoc" },
+			pattern = { "typescriptreact", "javascriptreact", "tsx" },
 			callback = function(args)
 				vim.bo[args.buf].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
 			end,
