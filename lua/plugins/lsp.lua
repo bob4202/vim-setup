@@ -170,6 +170,9 @@ return { -- Main LSP Configuration
 		vim.list_extend(ensure_installed, {
 			"stylua",
 			"prettierd",
+			"pgformatter", -- sql (Postgres), provides pg_format
+			"goimports",
+			"ruff", -- python formatter
 		})
 
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })

@@ -53,7 +53,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.o.expandtab = true
-vim.opt.guicursor = "n-v-c:block-blinkwait700-blinkoff400-blinkon250,i-ci-ve:block-blinkon0"
+vim.opt.guicursor = "n-v-c:block-blinkwait700-blinkoff400-blinkon250,i-ci-ve:ver25-blinkon0"
 
 -- Preview substitutions live, as you type!
 vim.o.inccommand = "split"
@@ -67,9 +67,16 @@ vim.o.scrolloff = 10
 -- Confirm instead of failing operations that would lose unsaved changes
 vim.o.confirm = true
 
--- Don't wrap long lines
-vim.o.wrap = false
+-- Soft-wrap long lines at word boundaries, keeping the code's indentation
+-- and marking wrapped lines with an icon
+vim.o.wrap = true
+vim.o.linebreak = true
+vim.o.breakindent = true
+vim.o.showbreak = "↪ "
 
 -- Reload a file from disk automatically if it changed outside Neovim
 -- (e.g. `git pull` from another tmux pane) and you haven't edited it here
 vim.o.autoread = true
+
+--Command Height to be 1
+vim.o.cmdheight = 1

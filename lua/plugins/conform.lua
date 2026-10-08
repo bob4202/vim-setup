@@ -11,6 +11,14 @@ return { -- Autoformat
 			mode = "",
 			desc = "[F]ormat buffer",
 		},
+		{
+			"=",
+			function()
+				require("conform").format({ async = true, lsp_format = "fallback" })
+			end,
+			mode = "x",
+			desc = "Format selection",
+		},
 	},
 	---@module 'conform'
 	---@type conform.setupOpts
@@ -36,6 +44,16 @@ return { -- Autoformat
 			typescript = { "prettierd", "prettier", stop_after_first = true },
 			typescriptreact = { "prettierd", "prettier", stop_after_first = true },
 			javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+			json = { "prettierd", "prettier", stop_after_first = true },
+			jsonc = { "prettierd", "prettier", stop_after_first = true },
+			css = { "prettierd", "prettier", stop_after_first = true },
+			scss = { "prettierd", "prettier", stop_after_first = true },
+			html = { "prettierd", "prettier", stop_after_first = true },
+			markdown = { "prettierd", "prettier", stop_after_first = true },
+			yaml = { "prettierd", "prettier", stop_after_first = true },
+			graphql = { "prettierd", "prettier", stop_after_first = true },
+			sql = { "pg_format" },
+			python = { "ruff_organize_imports", "ruff_format" },
 		},
 	},
 }
