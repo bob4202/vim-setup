@@ -78,5 +78,5 @@ vim.o.showbreak = "↪ "
 -- (e.g. `git pull` from another tmux pane) and you haven't edited it here
 vim.o.autoread = true
 
---Command Height to be 1
-vim.o.cmdheight = 1
+-- Hide the command line until it's actually needed (`:`, messages, prompts)
+vim.o.cmdheight = 0
