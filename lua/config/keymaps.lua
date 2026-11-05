@@ -30,12 +30,7 @@ end, { desc = "Prev diagnostic" })
 -- to discover than <C-\><C-n>
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+-- CTRL+<hjkl> moves between splits and tmux panes: see plugins/tmux-navigator.lua
 
 -- Move selected line(s) down/up in visual mode, re-indenting and re-selecting after
 -- `silent` matters with cmdheight=0: otherwise the "N lines moved" message
@@ -61,3 +56,18 @@ vim.keymap.set("n", "<leader>mm", "``", { desc = "Toggle last jump position" })
 -- Paste over a visual selection without clobbering the unnamed register with
 -- the replaced (deleted) text -- the deleted text goes to the black hole register instead
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste over selection, keep yanked text" })
+
+-- Marks: m+key saves a spot, Option+key jumps back, across files
+-- m reads the next key itself, so a pause between the two keys can't drop to
+-- the built-in per-file mark. Other letters behave as usual.
+local global_marks = { u = "U", i = "I", o = "O", p = "P" }
+vim.keymap.set("n", "m", function()
+	local key = vim.fn.getcharstr()
+	if key == "\27" then
+		return
+	end
+	pcall(vim.cmd, "normal! m" .. (global_marks[key] or key))
+end, { desc = "Set mark (u/i/o/p work across files)" })
+for key, mark in pairs(global_marks) do
+	vim.keymap.set("n", "<M-" .. key .. ">", "`" .. mark, { desc = "Jump to mark " .. mark })
+end

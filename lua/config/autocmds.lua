@@ -12,8 +12,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Create missing parent directories before writing a new file
 vim.api.nvim_create_autocmd("BufWritePre", {
-	callback = function()
-		local dir = vim.fn.expand("<afile>:p:h")
+	callback = function(args)
+		-- Skip oil:// and other name:// buffers, which aren't real file paths
+		if args.match:match("^%w[%w+.-]*://") then
+			return
+		end
+		local dir = vim.fn.fnamemodify(args.match, ":p:h")
 		if vim.fn.isdirectory(dir) == 0 then
 			vim.fn.mkdir(dir, "p")
 		end

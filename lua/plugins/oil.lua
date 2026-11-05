@@ -9,6 +9,8 @@ return {
 			},
 			keymaps = {
 				["<C-h>"] = false,
+				["<C-l>"] = false, -- leave it to tmux-navigator
+				["<leader>e"] = "actions.refresh",
 				["<M-h>"] = "actions.select_split",
 			},
 		})
