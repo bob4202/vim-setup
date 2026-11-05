@@ -38,8 +38,10 @@ vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower win
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 -- Move selected line(s) down/up in visual mode, re-indenting and re-selecting after
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+-- `silent` matters with cmdheight=0: otherwise the "N lines moved" message
+-- triggers a hit-enter prompt that swallows the trailing `gv=gv`
+vim.keymap.set("v", "J", ":<C-u>silent '<,'>m '>+1<CR>gv=gv", { silent = true, desc = "Move selection down" })
+vim.keymap.set("v", "K", ":<C-u>silent '<,'>m '<-2<CR>gv=gv", { silent = true, desc = "Move selection up" })
 
 -- Move by display line (not logical line) with plain j/k, so cursor movement
 -- follows wrapped lines naturally -- but a count prefix (e.g. 5j) still moves
