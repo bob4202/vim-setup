@@ -36,10 +36,10 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
 			end, "Prev Hunk")
 
 			-- Actions
-			map("n", "<leader>hs", gitsigns.stage_hunk, "Stage Hunk")
-			map("n", "<leader>hr", gitsigns.reset_hunk, "Reset Hunk")
-			map("n", "<leader>hp", gitsigns.preview_hunk, "Preview Hunk")
-			map("n", "<leader>hb", function()
+			map("n", "<leader>gs", gitsigns.stage_hunk, "Stage Hunk")
+			map("n", "<leader>gr", gitsigns.reset_hunk, "Reset Hunk")
+			map("n", "<leader>gp", gitsigns.preview_hunk, "Preview Hunk")
+			map("n", "<leader>gb", function()
 				gitsigns.blame_line({ full = true })
 			end, "Blame Line")
 		end,

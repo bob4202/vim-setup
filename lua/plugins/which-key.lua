@@ -12,7 +12,7 @@ return { -- Useful plugin to show you pending keybinds.
 			{ "<leader>s", group = "[S]earch", mode = { "n", "v" } },
 			{ "<leader>t", group = "[T]oggle" },
 			{ "<leader>o", group = "[O]rganize" },
-			{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
+			{ "<leader>g", group = "[G]it Hunk", mode = { "n", "v" } },
 			{ "gr", group = "LSP Actions", mode = { "n" } },
 		},
 	},

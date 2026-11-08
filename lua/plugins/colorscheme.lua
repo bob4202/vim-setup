@@ -7,6 +7,10 @@ return {
 			variant = "main",
 			styles = {
 				transparency = true,
+				italic = false,
+			},
+			highlight_groups = {
+				Comment = { italic = true },
 			},
 		})
 		vim.cmd.colorscheme("rose-pine")

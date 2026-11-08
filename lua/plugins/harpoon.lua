@@ -62,9 +62,8 @@ return {
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end, { desc = "Harpoon Menu" })
 
-		-- Jump to slots: Option(Alt) + h/j/k/l -> slots 1-4 (home row)
-		-- (needs `macos-option-as-alt = left` in Ghostty config)
-		local slot_keys = { "<M-h>", "<M-j>", "<M-k>", "<M-l>" }
+		-- Jump to slots: <leader> + h/j/k/l -> slots 1-4 (home row)
+		local slot_keys = { "<leader>h", "<leader>j", "<leader>k", "<leader>l" }
 		for i, key in ipairs(slot_keys) do
 			vim.keymap.set("n", key, function()
 				harpoon:list():select(i)
