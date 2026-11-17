@@ -60,14 +60,16 @@ vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste over selection, keep 
 -- Marks: m+key saves a spot, Option+key jumps back, across files
 -- m reads the next key itself, so a pause between the two keys can't drop to
 -- the built-in per-file mark. Other letters behave as usual.
-local global_marks = { u = "U", i = "I", o = "O", p = "P" }
+-- Uses j/k/l/; (home row); Option+u/i/o/p belong to tmux window switching.
+-- Stored as U/I/O/P so marks saved under the old u/i/o/p keys carry over.
+local global_marks = { j = "U", k = "I", l = "O", [";"] = "P" }
 vim.keymap.set("n", "m", function()
 	local key = vim.fn.getcharstr()
 	if key == "\27" then
 		return
 	end
 	pcall(vim.cmd, "normal! m" .. (global_marks[key] or key))
-end, { desc = "Set mark (u/i/o/p work across files)" })
+end, { desc = "Set mark (j/k/l/; work across files)" })
 for key, mark in pairs(global_marks) do
 	vim.keymap.set("n", "<M-" .. key .. ">", "`" .. mark, { desc = "Jump to mark " .. mark })
 end

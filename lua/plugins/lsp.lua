@@ -50,6 +50,15 @@ return { -- Main LSP Configuration
 					})
 				end, "[O]rganize/Add [I]mports")
 
+				-- Go: fill every field of the struct literal under the cursor
+				-- (e.g. pgtype.UUID{} -> pgtype.UUID{Bytes: [16]byte{}, Valid: false})
+				map("<leader>fs", function()
+					vim.lsp.buf.code_action({
+						context = { only = { "refactor.rewrite.fillStruct" }, diagnostics = {} },
+						apply = true,
+					})
+				end, "[F]ill [S]truct")
+
 				-- WARN: This is not Goto Definition, this is Goto Declaration.
 				map("grD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 

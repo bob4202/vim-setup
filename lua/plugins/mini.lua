@@ -13,6 +13,15 @@ return { -- Collection of various small independent plugins/modules
 		--  - sr)'  - [S]urround [R]eplace [)] [']
 		require("mini.surround").setup()
 
+		-- Split/join arguments and struct fields: put the cursor inside (), {} or []
+		-- and press gS to toggle between one line and one item per line.
+		-- Adds/removes the trailing comma Go requires on multi-line lists.
+		local splitjoin = require("mini.splitjoin")
+		splitjoin.setup({
+			split = { hooks_post = { splitjoin.gen_hook.add_trailing_separator() } },
+			join = { hooks_post = { splitjoin.gen_hook.del_trailing_separator() } },
+		})
+
 		-- Simple and easy statusline.
 		local statusline = require("mini.statusline")
 		statusline.setup({ use_icons = vim.g.have_nerd_font })
